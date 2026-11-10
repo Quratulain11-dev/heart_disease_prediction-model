@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heart Disease Predictor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="header">
+    <div class="container">
+      <h1> Heart Disease Predictor</h1>
+      <p>Enter the patient's clinical details to estimate the risk of heart disease.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <form id="predictForm" novalidate>
+
+        <fieldset>
+          <legend>Basic Information</legend>
+          <div class="grid">
+            <div class="field">
+              <label for="age">Age (years)</label>
+              <input type="number" id="age" name="age" min="1" max="120" required placeholder="e.g. 54">
+              <span class="error" id="age-error"></span>
+            </div>
+
+            <div class="field">
+              <label for="sex">Sex</label>
+              <select id="sex" name="sex" required>
+                <option value="">Select</option>
+                <option value="1">Male</option>
+                <option value="0">Female</option>
+              </select>
+              <span class="error" id="sex-error"></span>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Clinical Measurements</legend>
+          <div class="grid">
+            <div class="field">
+              <label for="trestbps">Resting blood pressure (mm Hg)</label>
+              <input type="number" id="trestbps" name="trestbps" min="50" max="250" required placeholder="e.g. 130">
+              <span class="error" id="trestbps-error"></span>
+            </div>
+
+            <div class="field">
+              <label for="chol">Serum cholesterol (mg/dl)</label>
+              <input type="number" id="chol" name="chol" min="50" max="700" required placeholder="e.g. 246">
+              <span class="error" id="chol-error"></span>
+            </div>
+
+            <div class="field">
+              <label for="thalach">Max heart rate achieved</label>
+              <input type="number" id="thalach" name="thalach" min="50" max="250" required placeholder="e.g. 150">
+              <span class="error" id="thalach-error"></span>
+            </div>
+
+            <div class="field">
+              <label for="oldpeak">ST depression (oldpeak)</label>
+              <input type="number" id="oldpeak" name="oldpeak" min="0" max="10" step="0.1" required placeholder="e.g. 1.0">
+              <span class="error" id="oldpeak-error"></span>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Symptoms & Tests</legend>
+          <div class="grid">
+            <div class="field">
+              <label for="cp">Chest pain type</label>
+              <select id="cp" name="cp" required>
+                <option value="">Select</option>
+                <option value="0">Typical angina</option>
+                <option value="1">Atypical angina</option>
+                <option value="2">Non-anginal pain</option>
+                <option value="3">Asymptomatic</option>
+              </select>
+              <span class="error" id="cp-error"></span>
+            </div>
+
+            <div class="field">
+              <label for="fbs">Fasting blood sugar &gt; 120 mg/dl</label>
+              <select id="fbs" name="fbs" required>
+                <option value="">Select</option>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+              </select>
+              <span class="error" id="fbs-error"></span>
+            </div>
+
+            <div class="field">
+              <label for="restecg">Resting ECG result</label>
+              <select id="restecg" name="restecg" required>
+                <option value="">Select</option>
+                <option value="0">Normal</option>
+                <option value="1">ST-T wave abnormality</option>
+                <option value="2">Left ventricular hypertrophy</option>
+              </select>
+              <span class="error" id="restecg-error"></span>
+            </div>
+
+            <div class="field">
+              <label for="exang">Exercise-induced angina</label>
+              <select id="exang" name="exang" required>
+                <option value="">Select</option>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+              </select>
+              <span class="error" id="exang-error"></span>
+            </div>
+
+            <div class="field">
+              <label for="slope">Slope of peak exercise ST segment</label>
+              <select id="slope" name="slope" required>
+                <option value="">Select</option>
+                <option value="0">Upsloping</option>
+                <option value="1">Flat</option>
+                <option value="2">Downsloping</option>
+              </select>
+              <span class="error" id="slope-error"></span>
+            </div>
+
+            <div class="field">
+              <label for="ca">Major vessels colored by fluoroscopy (0–3)</label>
+              <select id="ca" name="ca" required>
+                <option value="">Select</option>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
+              <span class="error" id="ca-error"></span>
+            </div>
+
+            <div class="field">
+              <label for="thal">Thalassemia</label>
+              <select id="thal" name="thal" required>
+                <option value="">Select</option>
+                <option value="1">Normal</option>
+                <option value="2">Fixed defect</option>
+                <option value="3">Reversible defect</option>
+              </select>
+              <span class="error" id="thal-error"></span>
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="actions">
+          <button type="submit" id="submitBtn" class="btn-primary">Predict Risk</button>
+          <button type="reset" class="btn-secondary" id="resetBtn">Clear</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card result hidden" id="resultCard" aria-live="polite">
+      <h2>Prediction Result</h2>
+      <div id="resultBadge" class="badge"></div>
+      <p id="resultText"></p>
+      <div class="meter">
+        <div id="resultBar" class="meter-fill"></div>
+      </div>
+      <p class="small" id="resultPercent"></p>
+    </section>
+
+    <section class="card error-card hidden" id="errorCard" role="alert">
+      <p id="errorText"></p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>This tool is for educational purposes only and is not a substitute for professional medical advice.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
